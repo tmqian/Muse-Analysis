@@ -69,7 +69,10 @@ except:
     hasRF2 = False
 
 if hasRF1 and hasRF2:
-    rf1.comboPlot(rf2)
+    try:
+        rf1.comboPlot(rf2)
+    except:
+        rf2.comboPlot(rf1)
 
 
 
@@ -78,11 +81,18 @@ T_probe = probe.unix_time # s from 1904
 
 
 # this will break if there is no RF1 data
-T_rf1_fwd = rf1.t_fwd_abs
-T_rf1_rev = rf1.t_rev_abs
-p1_fwd = rf1.P_fwd
-p1_rev = rf1.P_rev
-t0_global = T_rf1_fwd[0]
+try:
+    T_rf1_fwd = rf1.t_fwd_abs
+    T_rf1_rev = rf1.t_rev_abs
+    p1_fwd = rf1.P_fwd
+    p1_rev = rf1.P_rev
+    t0_global = T_rf1_fwd[0]
+except:
+    T_rf1_fwd = rf2.t_fwd_abs
+    T_rf1_rev = rf2.t_rev_abs
+    p1_fwd = rf2.P_fwd
+    p1_rev = rf2.P_rev
+    t0_global = T_rf1_fwd[0]
 
 T_probe -= t0_global
 T_rf1_fwd -= t0_global
